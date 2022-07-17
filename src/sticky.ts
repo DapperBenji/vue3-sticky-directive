@@ -1,6 +1,8 @@
 import { ComponentPublicInstance } from 'vue'
 import { State, LastState, Options, ElementStyle, ElementClassName } from './types'
 
+type stickySide = 'top' | 'bottom' | 'both'
+
 const namespace = '@@vue3-sticky-directive'
 const events = [
    'resize',
@@ -14,14 +16,11 @@ const events = [
 
 const batchStyle = (el: HTMLElement, style: ElementStyle = {}, className: ElementClassName = {}): void => {
    for (let k in style) {
-      /* @ts-ignore */
       el.style[k] = style[k]
    }
    for (let k in className) {
-      /* @ts-ignore */
       if (className[k] && !el.classList.contains(k)) {
          el.classList.add(k)
-         /* @ts-ignore */
       } else if (!className[k] && el.classList.contains(k)) {
          el.classList.remove(k)
       }
@@ -31,7 +30,7 @@ const batchStyle = (el: HTMLElement, style: ElementStyle = {}, className: Elemen
 class Sticky {
    el: HTMLElement
    vm: any// ComponentPublicInstance
-   unsubscribers: Array<()=> void>
+   unSubscribers: Array<()=> void>
    isPending: boolean
    state: State
    lastState: LastState
@@ -42,7 +41,7 @@ class Sticky {
    constructor (el: HTMLElement, vm: ComponentPublicInstance) {
       this.el = el
       this.vm = vm
-      this.unsubscribers = []
+      this.unSubscribers = []
       this.isPending = false
       this.state = {
          isTopSticky: null,
@@ -59,7 +58,7 @@ class Sticky {
       }
 
       const offset = this.getAttribute('sticky-offset') || {}
-      const side: string = this.getAttribute('sticky-side') || 'top'
+      const side: stickySide = this.getAttribute('sticky-side') || 'top'
       const zIndex: string = this.getAttribute('sticky-z-index') || '10'
       const onStick = this.getAttribute('on-stick') || null
 
@@ -74,7 +73,7 @@ class Sticky {
    }
 
    doBind(): void {
-      if (this.unsubscribers.length > 0) {
+      if (this.unSubscribers.length > 0) {
          return
       }
 
@@ -85,8 +84,8 @@ class Sticky {
          el.parentElement!.insertBefore(this.placeholderEl, el)
          events.forEach(event => {
             const fn = this.update.bind(this)
-            this.unsubscribers.push(() => window.removeEventListener(event, fn))
-            this.unsubscribers.push(() =>
+            this.unSubscribers.push(() => window.removeEventListener(event, fn))
+            this.unSubscribers.push(() =>
                this.containerEl!.removeEventListener(event, fn)
             )
             window.addEventListener(event, fn, { passive: true })
@@ -96,8 +95,8 @@ class Sticky {
    }
 
    doUnbind(): void {
-      this.unsubscribers.forEach(fn => fn())
-      this.unsubscribers = []
+      this.unSubscribers.forEach(fn => fn())
+      this.unSubscribers = []
       this.resetElement()
    }
 

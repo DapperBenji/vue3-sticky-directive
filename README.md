@@ -1,6 +1,6 @@
 # vue3-sticky-directive
 
-vue3-sticky-directive is a powerful vue 3 directive make element sticky.
+Vue3-sticky-directive is a powerful Vue 3 directive make element sticky. This is an implementation of the [vue-sticky-directive](https://github.com/mehwww/vue-sticky-directive) package for Vue 2.
 
 # Install
 
@@ -18,13 +18,11 @@ const app = createApp({
 app.use(Sticky)
 app.mount('#app')
 
-Vue.use(Sticky)
-
 ```
 
 # Usage
 
-Use `v-sticky` directive to enable element postion sticky, and use `sticky-*` attributes to define its options. Sticky element will find its nearest element with `sticky-container` attribute or its parent node if faild as the releative element.
+Use `v-sticky` directive to enable element position sticky, and use `sticky-*` attributes to define its options. Sticky element will find its nearest element with `sticky-container` attribute or its parent node if failed as the relative element.
 
 ```HTML
 <div sticky-container>
@@ -35,6 +33,7 @@ Use `v-sticky` directive to enable element postion sticky, and use `sticky-*` at
 ```
 
 # Options
+
 * `sticky-offset` - set sticky offset, it support a vm variable name or a js expression like `{top: 10, bottom: 20}`
   * `top`_(number)_ - set the top breakpoint (default: `0`)
   * `bottom`_(number)_ - set the bottom breakpoint (default: `0`)
@@ -51,7 +50,7 @@ Use `v-sticky` directive to enable element postion sticky, and use `sticky-*` at
 }
 ```
 
-An expression that evaluates to false set on `v-sticky` can be used to disable stickiness condtionally.
+An expression that evaluates to false set on `v-sticky` can be used to disable stickiness conditionally.
 
 ```HTML
 <div sticky-container>
@@ -61,11 +60,23 @@ An expression that evaluates to false set on `v-sticky` can be used to disable s
 </div>
 ```
 ```JavaScript
-export defaults {
-  data () {
+import { defineComponent, ref } from 'vue'
+
+// Options API
+defineComponent({
+  data() {
     shouldStick: false
   }
-}
+})
+
+// or with the Composition API
+defineComponent({
+  setup() {
+    const shouldStick = ref(false)
+
+    return { shouldStick }
+  }
+})
 ```
 
 # License

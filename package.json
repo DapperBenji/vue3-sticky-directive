@@ -1,12 +1,13 @@
 {
   "name": "vue3-sticky-directive",
+  "author": "DapperBenji <dapperbenji@dev.com>",
   "version": "0.0.1",
   "type": "module",
   "files": [
     "dist"
   ],
   "exports": {
-    ".":  "./dist/index.es.js"
+    ".": "./dist/index.es.js"
   },
   "license": "MIT",
   "types": "./index.d.ts",
@@ -14,6 +15,11 @@
     "type": "git",
     "url": "https://github.com/DapperBenji/vue3-sticky-directive.git"
   },
+  "keywords": [
+    "vue",
+    "sticky",
+    "directive"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
