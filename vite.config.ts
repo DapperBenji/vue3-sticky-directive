@@ -1,15 +1,16 @@
-import path from 'path'
+import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import typescript from 'rollup-plugin-typescript2'
 
-// https://vitejs.dev/config/
 export default defineConfig({
    build: {
+      minify: true,
       lib: {
-         entry: path.resolve(__dirname, 'src/index.ts'),
+         entry: resolve(__dirname, 'src/index.ts'),
          name: 'vue3-sticky-directive',
          formats: ['es', 'cjs'],
-         fileName: (format) => `index.${format}.js`
+         fileName: (format) => (format === 'es' ? 'index.js' : 'index.umd.cjs')
       },
       rollupOptions: {
          external: ['vue'],
@@ -21,6 +22,22 @@ export default defineConfig({
       }
    },
    plugins: [
-      vue()
+      vue(),
+      typescript({
+         check: false,
+         tsconfig: 'tsconfig.json',
+         include: [
+            'src/index.ts',
+            'src/sticky.ts'
+         ],
+         tsconfigOverride: {
+            compilerOptions: {
+               declaration: true
+            }
+         },
+         exclude: [
+            'vite.config.ts'
+         ]
+      })
    ]
 })

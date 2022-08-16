@@ -1,4 +1,4 @@
-# vue3-sticky-directive
+# Vue3 Sticky Directive
 
 Vue3-sticky-directive is a powerful Vue 3 directive make element sticky. This is an implementation of the [vue-sticky-directive](https://github.com/mehwww/vue-sticky-directive) package for Vue 2.
 

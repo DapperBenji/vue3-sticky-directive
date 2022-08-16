@@ -1,16 +1,19 @@
 {
   "name": "vue3-sticky-directive",
   "author": "DapperBenji <dapperbenji@dev.com>",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
+  "main": "./dist/index.umd.cjs",
+  "module": "./dist/index.js",
   "exports": {
-    ".": "./dist/index.es.js"
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs"
+    }
   },
   "license": "MIT",
-  "types": "./index.d.ts",
+  "types": "./dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/DapperBenji/vue3-sticky-directive.git"
@@ -29,8 +32,11 @@
     "vue": "3.2.37"
   },
   "devDependencies": {
+    "@types/node": "^18.7.5",
     "@vitejs/plugin-vue": "3.0.0",
-    "typescript": "^4.6.4",
+    "rollup-plugin-typescript2": "^0.32.1",
+    "tslib": "^2.4.0",
+    "typescript": "^4.7.4",
     "vite": "3.0.0",
     "vue-tsc": "0.38.4"
   }
